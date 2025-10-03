@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+    --primary: royalblue;
+    --secondary: mediumblue;
+    --success: deepskyblue;
+    --danger: deeppink;
+    --warning: darkorange;
+    --info: dodgerblue;
+    --light: whitesmoke;
+    --dark: #212529;
+    --gray: slategray;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, slateblue 0%, mediumpurple 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.login-container {
+    display: flex;
+    min-height: 700px;
+}
+
+.welcome-section {
+    flex: 1;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+}
+
+.welcome-section > * {
+    position: relative;
+    z-index: 1;
+}
+
+.logo h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.welcome-section h1 {
+    font-size: 2.8rem;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.welcome-section p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+.features {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature span:first-child {
+    font-size: 2rem;
+}
+
+.feature span:last-child {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.login-section {
+    flex: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: white;
+}
+
+.login-section h2 {
+    color: var(--primary);
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--dark);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid gainsboro;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--light);
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1); /* royalblue with opacity */
+    outline: none;
+    background: white;
+}
+
+.role-selector {
+    display: flex;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.role-option {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.role-option:first-child {
+    border-radius: 12px 0 0 12px;
+}
+
+.role-option:last-child {
+    border-radius: 0 12px 12px 0;
+}
+
+.role-option.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.role-option:hover:not(.active) {
+    background: var(--light);
+    border-color: var(--primary);
+}
+
+.btn {
+    padding: 16px 25px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: var(--secondary);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(65, 105, 225, 0.3); /* royalblue with opacity */
+}
+
+.logout-btn {
+    background: var(--danger);
+    color: white;
+    padding: 10px 20px;
+    margin-left: 15px;
+}
+
+.logout-btn:hover {
+    background: crimson;
+    transform: translateY(-2px);
+}
+
+.dashboard {
+    display: none;
+    padding: 40px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid lavender;
+}
+
+.dashboard-title {
+    color: var(--primary);
+    font-size: 2.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.1rem;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+    border: 1px solid lavender;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.card-title {
+    color: var(--primary);
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 1px solid lavender;
+}
+
+th {
+    background: var(--light);
+    color: var(--dark);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+tr:hover {
+    background: var(--light);
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(65, 105, 225, 0.3); /* royalblue with opacity */
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+}
+
+.stat-card:hover::before {
+    transform: translateX(100%);
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(65, 105, 225, 0.4); /* royalblue with opacity */
+}
+
+.stat-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+.stat-value {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 15px 0;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.alert {
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    display: none;
+    border-left: 5px solid;
+}
+
+.alert-danger {
+    background: mistyrose;
+    color: darkred;
+    border-left-color: lightcoral;
+}
+
+.demo-credentials {
+    margin-top: 30px;
+    padding: 20px;
+    background: var(--light);
+    border-radius: 12px;
+    border-left: 5px solid var(--primary);
+}
+
+.demo-credentials h4 {
+    margin-bottom: 15px;
+    color: var(--dark);
+}
+
+.credential-group {
+    margin: 8px 0;
+    padding: 8px 12px;
+    background: white;
+    border-radius: 8px;
+    font-family: monospace;
+}
+
+.profile-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.profile-info p {
+    padding: 15px;
+    background: var(--light);
+    border-radius: 10px;
+    margin: 0;
+}
+
+.branches-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.branch-item {
+    padding: 20px;
+    background: var(--light);
+    border-radius: 10px;
+    text-align: center;
+    border-left: 4px solid var(--primary);
+}
+
+.courses-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.course-item {
+    padding: 20px;
+    background: var(--light);
+    border-radius: 10px;
+    border-left: 4px solid var(--success);
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: var(--gray);
+}
+
+@media (max-width: 968px) {
+    .login-container {
+        flex-direction: column;
+    }
+    
+    .welcome-section {
+        padding: 40px 30px;
+    }
+    
+    .login-section {
+        padding: 40px 30px;
+    }
+    
+    .dashboard {
+        padding: 30px 20px;
+    }
+    
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .dashboard-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .role-selector {
+        flex-direction: column;
+    }
+    
+    .role-option:first-child,
+    .role-option:last-child {
+        border-radius: 12px;
+    }
+    
+    .features {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    table {
+        font-size: 0.9rem;
+    }
+    
+    th, td {
+        padding: 12px 15px;
+    }
+}
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Page -->
+        <div id="login-page" class="login-container">
+            <div class="welcome-section">
+                <div class="logo">
+                    <h1></h1>
+                </div>
+                <h1>Student Management System</h1>
+                <p>Welcome to our comprehensive student management platform. Access your dashboard based on your role and manage academic information efficiently.</p>
+                <div class="features">
+                    <div class="feature">
+                        <span></span>
+                        <span>Academic Tracking</span>
+                    </div>
+                    <div class="feature">
+                        <span></span>
+                        <span>Role-based Access</span>
+                    </div>
+                    <div class="feature">
+                        <span></span>
+                        <span>Secure Platform</span>
+                    </div>
+                </div>
+            </div>
+            <div class="login-section">
+                <h2>Login to Your Account</h2>
+                
+                <div class="alert alert-danger" id="error-message"></div>
+                
+                <div class="role-selector">
+                    <div class="role-option active" data-role="admin">
+                        <span>Admin</span>
+                    </div>
+                    <div class="role-option" data-role="teacher">
+                        <span>Teacher</span>
+                    </div>
+                    <div class="role-option" data-role="student">
+                        <span>Student</span>
+                    </div>
+                </div>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" class="form-control" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Login to Dashboard
+                    </button>
+                </form>
+
+                <div class="demo-credentials">
+                    <h4>Demo Credentials:</h4>
+                    <div class="credential-group">
+                        <strong>Admin:</strong> admin / admin123
+                    </div>
+                    <div class="credential-group">
+                        <strong>Teacher:</strong> teacher1 / teacher123
+                    </div>
+                    <div class="credential-group">
+                        <strong>Student:</strong> lohitha / lohitha123
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Admin Dashboard -->
+        <div id="admin-dashboard" class="dashboard">
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">
+                    Admin Dashboard
+                </h2>
+                <div class="user-info">
+                    <span>Welcome, <strong id="admin-name">Admin</strong></span>
+                    <button class="btn logout-btn" onclick="logout()">
+                        Logout
+                    </button>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-students">0</div>
+                    <div class="stat-label">Total Students</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-teachers">0</div>
+                    <div class="stat-label">Total Teachers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-branches">0</div>
+                    <div class="stat-label">B.Tech Branches</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">
+                    All Students
+                </h3>
+                <div class="table-responsive">
+                    <table id="admin-students-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Branch</th>
+                                <th>Year</th>
+                                <th>Email</th>
+                                <th>CGPA</th>
+                                <th>Attendance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-students-body">
+                            <!-- Student data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">
+                    Branches
+                </h3>
+                <div class="branches-list" id="branches-list">
+                    <!-- Branches will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Teacher Dashboard -->
+        <div id="teacher-dashboard" class="dashboard">
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">
+                    Teacher Dashboard
+                </h2>
+                <div class="user-info">
+                    <span>Welcome, <strong id="teacher-name">Teacher</strong></span>
+                    <button class="btn logout-btn" onclick="logout()">
+                        Logout
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">
+                    My Students
+                </h3>
+                <div class="table-responsive">
+                    <table id="teacher-students-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Branch</th>
+                                <th>Year</th>
+                                <th>Attendance %</th>
+                                <th>CGPA</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacher-students-body">
+                            <!-- Student data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">
+                    Attendance Records
+                </h3>
+                <div class="table-responsive">
+                    <table id="attendance-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Subject</th>
+                                <th>Present</th>
+                                <th>Absent</th>
+                                <th>Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendance-body">
+                            <!-- Attendance data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Student Dashboard -->
+        <div id="student-dashboard" class="dashboard">
+            <div class="dashboard-header">
+                <h2 class="dashboard-title">
+                    Student Dashboard
+                </h2>
+                <div class="user-info">
+                    <span>Welcome, <strong id="student-name">Student</strong></span>
+                    <button class="btn logout-btn" onclick="logout()">
+                        Logout
+                    </button>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value" id="student-cgpa">0.0</div>
+                    <div class="stat-label">Current CGPA</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="student-attendance">0%</div>
+                    <div class="stat-label">Attendance %</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="student-courses">0</div>
+                    <div class="stat-label">Courses</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">
+                    My Profile
+                </h3>
+                <div id="student-profile" class="profile-info">
+                    <!-- Student profile data will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">
+                    Academic Performance
+                </h3>
+                <div class="table-responsive">
+                    <table id="student-grades-table">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Credits</th>
+                                <th>Grade</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-grades-body">
+                            <!-- Grade data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">
+                    My Courses
+                </h3>
+                <div id="student-courses-list" class="courses-list">
+                    <!-- Courses will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const database = {
+            users: {
+                admin: { 
+                    id: 1, 
+                    username: 'admin', 
+                    password: 'admin123',
+                    name: 'System Administrator', 
+                    role: 'admin', 
+                    email: 'admin@college.edu' 
+                },
+                teacher1: { 
+                    id: 2, 
+                    username: 'teacher1', 
+                    password: 'teacher123',
+                    name: 'Dr. Rajesh Sharma', 
+                    role: 'teacher', 
+                    email: 'rajesh.sharma@college.edu' 
+                },
+                teacher2: { 
+                    id: 3, 
+                    username: 'teacher2', 
+                    password: 'teacher123',
+                    name: 'Prof. Priya Gupta', 
+                    role: 'teacher', 
+                    email: 'priya.gupta@college.edu' 
+                }
+            },
+            students: [
+                // ECE Students
+                { id: 201, username: 'lohitha', password: 'lohitha123', name: 'Lohitha', branch: 'ECE', year: 3, email: 'lohitha@college.edu', phone: '9876543210', cgpa: 8.9, attendance: 85, address: 'Annavaram, Andhra Pradesh' },
+                { id: 202, username: 'abhay', password: 'abhay123', name: 'Abhay', branch: 'ECE', year: 3, email: 'abhay@college.edu', phone: '9876543211', cgpa: 8.2, attendance: 82, address: 'Kakinada, Andhra Pradesh' },
+                { id: 203, username: 'priya', password: 'password123', name: 'Priya Sharma', branch: 'ECE', year: 3, email: 'priya.sharma@college.edu', phone: '9876543212', cgpa: 8.7, attendance: 88, address: 'Delhi, Delhi' },
+                { id: 204, username: 'rahul', password: 'password123', name: 'Rahul Verma', branch: 'ECE', year: 3, email: 'rahul.verma@college.edu', phone: '9876543213', cgpa: 7.9, attendance: 79, address: 'Mumbai, Maharashtra' },
+                { id: 205, username: 'anjali', password: 'password123', name: 'Anjali Singh', branch: 'ECE', year: 3, email: 'anjali.singh@college.edu', phone: '9876543214', cgpa: 9.1, attendance: 92, address: 'Lucknow, Uttar Pradesh' },
+                { id: 206, username: 'vikram', password: 'password123', name: 'Vikram Patel', branch: 'ECE', year: 3, email: 'vikram.patel@college.edu', phone: '9876543215', cgpa: 8.5, attendance: 86, address: 'Ahmedabad, Gujarat' },
+                { id: 207, username: 'sneha', password: 'password123', name: 'Sneha Reddy', branch: 'ECE', year: 3, email: 'sneha.reddy@college.edu', phone: '9876543216', cgpa: 8.8, attendance: 89, address: 'Chennai, Tamil Nadu' },
+                { id: 208, username: 'arun', password: 'password123', name: 'Arun Kumar', branch: 'ECE', year: 3, email: 'arun.kumar@college.edu', phone: '9876543217', cgpa: 7.8, attendance: 76, address: 'Kochi, Kerala' },
+                { id: 209, username: 'divya', password: 'password123', name: 'Divya Nair', branch: 'ECE', year: 3, email: 'divya.nair@college.edu', phone: '9876543218', cgpa: 8.6, attendance: 84, address: 'Pune, Maharashtra' },
+                { id: 210, username: 'kiran', password: 'password123', name: 'Kiran Joshi', branch: 'ECE', year: 3, email: 'kiran.joshi@college.edu', phone: '9876543219', cgpa: 8.3, attendance: 81, address: 'Jaipur, Rajasthan' },
+                
+                // CSE Students
+                { id: 101, username: 'jagadeeswari', password: 'jagadeeswari123', name: 'Jagadeeswari', branch: 'CSE', year: 3, email: 'Jagadeeswari@college.edu', phone: '9876543220', cgpa: 9.2, attendance: 94, address: 'Bhimavaram, Andhra Pradesh' },
+                { id: 102, username: 'isha', password: 'password123', name: 'Isha Gupta', branch: 'CSE', year: 3, email: 'isha.gupta@college.edu', phone: '9876543221', cgpa: 8.8, attendance: 89, address: 'Kolkata, West Bengal' },
+                { id: 103, username: 'rohan', password: 'password123', name: 'Rohan Kumar', branch: 'CSE', year: 3, email: 'rohan.kumar@college.edu', phone: '9876543222', cgpa: 8.5, attendance: 87, address: 'Hyderabad, Telangana' },
+                { id: 104, username: 'neha', password: 'password123', name: 'Neha Singh', branch: 'CSE', year: 3, email: 'neha.singh@college.edu', phone: '9876543223', cgpa: 9.0, attendance: 91, address: 'Bangalore, Karnataka' },
+                { id: 105, username: 'vivek', password: 'password123', name: 'Vivek Patel', branch: 'CSE', year: 3, email: 'vivek.patel@college.edu', phone: '9876543224', cgpa: 8.7, attendance: 88, address: 'Ahmedabad, Gujarat' },
+                
+                // ME Students
+                { id: 301, username: 'amit', password: 'password123', name: 'Amit Sharma', branch: 'ME', year: 3, email: 'amit.sharma@college.edu', phone: '9876543230', cgpa: 8.7, attendance: 88, address: 'Delhi, Delhi' },
+                { id: 302, username: 'sunita', password: 'password123', name: 'Sunita Gupta', branch: 'ME', year: 3, email: 'sunita.gupta@college.edu', phone: '9876543231', cgpa: 8.9, attendance: 90, address: 'Kolkata, West Bengal' },
+                
+                // CE Students
+                { id: 401, username: 'rakesh', password: 'password123', name: 'Rakesh Sharma', branch: 'CE', year: 3, email: 'rakesh.sharma@college.edu', phone: '9876543240', cgpa: 8.6, attendance: 87, address: 'Delhi, Delhi' },
+                { id: 402, username: 'geeta', password: 'password123', name: 'Geeta Gupta', branch: 'CE', year: 3, email: 'geeta.gupta@college.edu', phone: '9876543241', cgpa: 8.8, attendance: 89, address: 'Kolkata, West Bengal' },
+                
+                // EEE Students
+                { id: 501, username: 'nitin', password: 'password123', name: 'Nitin Sharma', branch: 'EEE', year: 3, email: 'nitin.sharma@college.edu', phone: '9876543250', cgpa: 8.7, attendance: 88, address: 'Delhi, Delhi' },
+                { id: 502, username: 'ritu', password: 'password123', name: 'Ritu Gupta', branch: 'EEE', year: 3, email: 'ritu.gupta@college.edu', phone: '9876543251', cgpa: 8.9, attendance: 90, address: 'Kolkata, West Bengal' }
+            ],
+            grades: [
+                { id: 1, studentId: 201, subject: 'Digital Electronics', credits: 4, grade: 'A', result: 'Pass' },
+                { id: 2, studentId: 201, subject: 'Signals and Systems', credits: 4, grade: 'A', result: 'Pass' },
+                { id: 3, studentId: 201, subject: 'Communication Systems', credits: 3, grade: 'B+', result: 'Pass' },
+                { id: 4, studentId: 201, subject: 'Microprocessors', credits: 4, grade: 'A', result: 'Pass' },
+                { id: 5, studentId: 201, subject: 'Electromagnetic Theory', credits: 3, grade: 'A', result: 'Pass' },
+                
+                { id: 6, studentId: 202, subject: 'Digital Electronics', credits: 4, grade: 'B+', result: 'Pass' },
+                { id: 6, studentId: 202, subject: 'Signals and Systems', credits: 4, grade: 'B', result: 'Pass' },
+                { id: 7, studentId: 202, subject: 'Communication Systems', credits: 3, grade: 'A', result: 'Pass' },
+                
+                { id: 8, studentId: 203, subject: 'Digital Electronics', credits: 4, grade: 'A', result: 'Pass' },
+                { id: 9, studentId: 101, subject: 'Data Structures', credits: 4, grade: 'A+', result: 'Pass' }
+            ],
+            attendance: [
+                { id: 1, date: '2023-10-01', subject: 'Digital Electronics', present: 25, absent: 5, percentage: 83.3 },
+                { id: 2, date: '2023-10-02', subject: 'Signals and Systems', present: 27, absent: 3, percentage: 90.0 },
+                { id: 3, date: '2023-10-03', subject: 'Communication Systems', present: 26, absent: 4, percentage: 86.7 },
+                { id: 4, date: '2023-10-04', subject: 'Microprocessors', present: 28, absent: 2, percentage: 93.3 }
+            ],
+            branches: [
+                { id: 1, name: 'Computer Science and Engineering', code: 'CSE' },
+                { id: 2, name: 'Electronics and Communication Engineering', code: 'ECE' },
+                { id: 3, name: 'Mechanical Engineering', code: 'ME' },
+                { id: 4, name: 'Civil Engineering', code: 'CE' },
+                { id: 5, name: 'Electrical and Electronics Engineering', code: 'EEE' }
+            ],
+            courses: [
+                { name: 'Digital Electronics', code: 'EC301', credits: 4 },
+                { name: 'Signals and Systems', code: 'EC302', credits: 4 },
+                { name: 'Communication Systems', code: 'EC303', credits: 3 },
+                { name: 'Microprocessors', code: 'EC304', credits: 4 },
+                { name: 'Data Structures', code: 'CS301', credits: 4 },
+                { name: 'Database Systems', code: 'CS302', credits: 4 }
+            ]
+        };
+
+        let currentUser = null;
+        let currentRole = 'admin';
+
+        const loginPage = document.getElementById('login-page');
+        const adminDashboard = document.getElementById('admin-dashboard');
+        const teacherDashboard = document.getElementById('teacher-dashboard');
+        const studentDashboard = document.getElementById('student-dashboard');
+        const roleOptions = document.querySelectorAll('.role-option');
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+
+        roleOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                roleOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                currentRole = option.getAttribute('data-role');
+            });
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            errorMessage.style.display = 'none';
+
+            const submitBtn = loginForm.querySelector('button');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = ' Logging in...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                try {
+                    if (validateCredentials(username, password, currentRole)) {
+                        loginUser(username);
+                    } else {
+                        showError('Invalid username or password for the selected role.');
+                    }
+                } catch (error) {
+                    showError('Login error. Please try again.');
+                    console.error('Login error:', error);
+                } finally {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 1000);
+        });
+
+        function validateCredentials(username, password, role) {
+            if (role === 'student') {
+                const student = database.students.find(s => s.username === username);
+                return student && student.password === password;
+            } else {
+                const user = database.users[username];
+                return user && user.password === password && user.role === role;
+            }
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            
+            // Auto-hide error after 5 seconds
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function loginUser(username) {
+            if (currentRole === 'student') {
+                currentUser = database.students.find(s => s.username === username);
+                currentUser.role = 'student';
+            } else {
+                currentUser = database.users[username];
+            }
+            
+            loginPage.style.display = 'none';
+            
+            if (currentUser.role === 'admin') {
+                showAdminDashboard();
+            } else if (currentUser.role === 'teacher') {
+                showTeacherDashboard();
+            } else if (currentUser.role === 'student') {
+                showStudentDashboard();
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            
+            adminDashboard.style.display = 'none';
+            teacherDashboard.style.display = 'none';
+            studentDashboard.style.display = 'none';
+            
+            loginPage.style.display = 'flex';
+            
+            loginForm.reset();
+            roleOptions.forEach(opt => opt.classList.remove('active'));
+            roleOptions[0].classList.add('active');
+            currentRole = 'admin';
+            
+            errorMessage.style.display = 'none';
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('admin-name').textContent = currentUser.name;
+            
+            document.getElementById('total-students').textContent = database.students.length;
+            document.getElementById('total-teachers').textContent = Object.values(database.users).filter(user => user.role === 'teacher').length;
+            document.getElementById('total-branches').textContent = database.branches.length;
+            
+            const tableBody = document.getElementById('admin-students-body');
+            tableBody.innerHTML = '';
+            
+            database.students.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.id}</td>
+                    <td><strong>${student.name}</strong></td>
+                    <td>${student.branch}</td>
+                    <td>Year ${student.year}</td>
+                    <td>${student.email}</td>
+                    <td>${student.cgpa}</td>
+                    <td>${student.attendance}%</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            const branchesList = document.getElementById('branches-list');
+            branchesList.innerHTML = '';
+            
+            database.branches.forEach(branch => {
+                const branchItem = document.createElement('div');
+                branchItem.className = 'branch-item';
+                branchItem.innerHTML = `
+                    <h4>${branch.name}</h4>
+                    <p>Code: ${branch.code}</p>
+                `;
+                branchesList.appendChild(branchItem);
+            });
+            
+            adminDashboard.style.display = 'block';
+        }
+
+        function showTeacherDashboard() {
+            document.getElementById('teacher-name').textContent = currentUser.name;
+            
+            const tableBody = document.getElementById('teacher-students-body');
+            tableBody.innerHTML = '';
+            
+            database.students.slice(0, 10).forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.id}</td>
+                    <td><strong>${student.name}</strong></td>
+                    <td>${student.branch}</td>
+                    <td>Year ${student.year}</td>
+                    <td>${student.attendance}%</td>
+                    <td>${student.cgpa}</td>
+                    <td>${student.email}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            const attendanceBody = document.getElementById('attendance-body');
+            attendanceBody.innerHTML = '';
+            
+            database.attendance.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.date}</td>
+                    <td>${record.subject}</td>
+                    <td>${record.present}</td>
+                    <td>${record.absent}</td>
+                    <td>${record.percentage}%</td>
+                `;
+                attendanceBody.appendChild(row);
+            });
+            
+            teacherDashboard.style.display = 'block';
+        }
+
+        function showStudentDashboard() {
+            document.getElementById('student-name').textContent = currentUser.name;
+            
+            document.getElementById('student-cgpa').textContent = currentUser.cgpa;
+            document.getElementById('student-attendance').textContent = currentUser.attendance + '%';
+            document.getElementById('student-courses').textContent = '6'; // Fixed for demo
+            
+            const profileDiv = document.getElementById('student-profile');
+            profileDiv.innerHTML = `
+                <p><strong>Student ID:</strong> ${currentUser.id}</p>
+                <p><strong>Name:</strong> ${currentUser.name}</p>
+                <p><strong>Branch:</strong> ${currentUser.branch}</p>
+                <p><strong>Year:</strong> ${currentUser.year}</p>
+                <p><strong>Email:</strong> ${currentUser.email}</p>
+                <p><strong>Phone:</strong> ${currentUser.phone}</p>
+                <p><strong>Address:</strong> ${currentUser.address}</p>
+                <p><strong>CGPA:</strong> ${currentUser.cgpa}</p>
+                <p><strong>Attendance:</strong> ${currentUser.attendance}%</p>
+            `;
+            
+            const gradesBody = document.getElementById('student-grades-body');
+            gradesBody.innerHTML = '';
+            
+            const studentGrades = database.grades.filter(grade => grade.studentId === currentUser.id);
+            
+            if (studentGrades.length > 0) {
+                studentGrades.forEach(grade => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${grade.subject}</td>
+                        <td>${grade.credits}</td>
+                        <td>${grade.grade}</td>
+                        <td>${grade.result}</td>
+                    `;
+                    gradesBody.appendChild(row);
+                });
+            } else {
+                const placeholderGrades = [
+                    { subject: 'Mathematics', credits: 4, grade: 'A', result: 'Pass' },
+                    { subject: 'Physics', credits: 4, grade: 'B+', result: 'Pass' },
+                    { subject: 'Programming', credits: 3, grade: 'A-', result: 'Pass' }
+                ];
+                
+                placeholderGrades.forEach(grade => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${grade.subject}</td>
+                        <td>${grade.credits}</td>
+                        <td>${grade.grade}</td>
+                        <td>${grade.result}</td>
+                    `;
+                    gradesBody.appendChild(row);
+                });
+            }
+
+            const coursesList = document.getElementById('student-courses-list');
+            coursesList.innerHTML = '';
+            
+            let relevantCourses = database.courses.filter(course => 
+                course.code.startsWith(currentUser.branch.substring(0, 2))
+            );
+            
+            if (relevantCourses.length === 0) {
+                relevantCourses = database.courses.slice(0, 3); // Fallback to first 3 courses
+            }
+            
+            relevantCourses.forEach(course => {
+                const courseItem = document.createElement('div');
+                courseItem.className = 'course-item';
+                courseItem.innerHTML = `
+                    <h4>${course.name}</h4>
+                    <p><strong>Code:</strong> ${course.code}</p>
+                    <p><strong>Credits:</strong> ${course.credits}</p>
+                `;
+                coursesList.appendChild(courseItem);
+            });
+            
+            studentDashboard.style.display = 'block';
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
